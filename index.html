@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>English for Nehir - Random Mode</title>
+    <title id="page-title">English for Kids</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -16,17 +16,33 @@
         }
         h1 { color: #ff6f61; font-size: 24px; margin: 10px 0; font-weight: bold; }
         
+        /* İsim Giriş Ekranı Stili */
+        #name-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f0f4f8; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 1000;
+        }
+        .name-input {
+            padding: 15px; font-size: 20px; border-radius: 15px;
+            border: 3px solid #ffca28; outline: none; margin-bottom: 20px;
+            width: 70%; max-width: 300px; text-align: center;
+        }
+        .start-game-btn {
+            padding: 15px 40px; font-size: 20px; background: #4caf50;
+            color: white; border: none; border-radius: 15px; cursor: pointer;
+            font-weight: bold; box-shadow: 0 4px rgba(0,0,0,0.1);
+        }
+
         .menu-grid {
-            display: grid;
+            display: none; /* İsim girilene kadar gizli */
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             max-width: 500px;
             margin: 0 auto;
         }
         
-        /* Random Butonu için özel stil */
         .random-btn {
-            grid-column: span 2; /* İki sütunu kaplar */
+            grid-column: span 2;
             padding: 25px;
             font-size: 22px;
             background: linear-gradient(45deg, #ff6f61, #ffca28);
@@ -40,7 +56,7 @@
         }
 
         .menu-btn {
-            padding: 40px 20px;
+            padding: 20px 10px;
             font-size: 18px;
             cursor: pointer;
             border: none;
@@ -99,7 +115,14 @@
 </head>
 <body>
 
-    <h1>🌟 English for Nehir 🌟</h1>
+    <div id="name-screen">
+        <h1>Welcome!</h1>
+        <p style="font-weight: bold; color: #555;">What is your name?</p>
+        <input type="text" id="user-name-input" class="name-input" placeholder="Type your name..." maxlength="15">
+        <button class="start-game-btn" onclick="saveName()">Let's Play! 🚀</button>
+    </div>
+
+    <h1 id="game-main-title">🌟 English for Kids 🌟</h1>
     
     <div id="main-menu" class="menu-grid">
         <button class="random-btn" onclick="startGame('random')">🎲 MIXED / RANDOM</button>
@@ -124,13 +147,34 @@
         <div id="target-text">Ready?</div>
         <div id="game-content"></div>
         <br>
-        <button class="menu-btn" style="background:#90a4ae; padding: 10px 20px; font-size:14px;" onclick="showMenu()">🏠 Menu</button>
+        <button class="menu-btn" style="background:#90a4ae; padding: 10px 20px; font-size:28px;" onclick="showMenu()">🏠 Menu</button>
     </div>
 
     <script>
+        // İsim Değişkeni
+        let userName = "Nehir"; // Varsayılan
+
+        function saveName() {
+            const input = document.getElementById('user-name-input');
+            if(input.value.trim() !== "") {
+                userName = input.value.trim();
+            }
+            
+            // Başlıkları Güncelle
+            document.getElementById('game-main-title').innerText = `🌟 English for ${userName} 🌟`;
+            document.getElementById('page-title').innerText = `English for ${userName}`;
+            
+            // Ekranları değiştir
+            document.getElementById('name-screen').style.display = 'none';
+            document.getElementById('main-menu').style.display = 'grid';
+            
+            // İlk sesi tetikle (Safari/iOS için ses kilidini açar)
+            speak(`Hello ${userName}, let's learn English!`);
+        }
+
         const data = {
             toys: [{n:'Teddy Bear', v:'🧸'}, {n:'Doll', v:'🪆'}, {n:'Ball', v:'⚽'}, {n:'Car', v:'🚗'}, {n:'Balloon', v:'🎈'}, {n:'Robot', v:'🤖'}, {n:'Kite', v:'🪁'}],
-            colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}, {n:'Orange', v:'#ffa500'}, {n:'White', v:'#ffffff'}, {n:'Black', v:'#000000'}],
+            colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}, {n:'Orange', v:'#ffa500'}, {n:'White', v:'#ffffff'}, {n:'Black', v:'#000000'}, {n:'Gray', v:'#808080'}, {n:'Brown', v:'#895129'}],
             animals: [{n:'Dog', v:'🐶'}, {n:'Cat', v:'🐱'}, {n:'Lion', v:'🦁'}, {n:'Monkey', v:'🐵'}, {n:'Rabbit', v:'🐰'}, {n:'Elephant', v:'🐘'}, {n:'Fish', v:'🐟'}, {n:'Bee', v:'🐝'}, {n:'Ant', v:'🐜'}, {n:'Turtle', v:'🐢'}, {n:'Penguin', v:'🐧'}, {n:'Panda', v:'🐼'}, {n:'Cow', v:'🐮'}, {n:'Pig', v:'🐖'}, {n:'Horse', v:'🐴'}, {n:'Mouse', v:'🐭'}, {n:'Bear', v:'🐻'}, {n:'Tiger', v:'🐅'}, {n:'Frog', v:'🐸'}, {n:'Snail', v:'🐌'}, {n:'Fox', v:'🦊'}, {n:'Butterfly', v:'🦋'}, {n:'Zebra', v:'🦓'}, {n:'Giraffe', v:'🦒'}, {n:'Egg', v:'🥚'}],
             numbers: [{n:'One', v:'1'}, {n:'Two', v:'2'}, {n:'Three', v:'3'}, {n:'Four', v:'4'}, {n:'Five', v:'5'}, {n:'Six', v:'6'}],
             vehicles: [{n:'Airplane', v:'✈️'}, {n:'Ship', v:'🚢'}, {n:'Train', v:'🚂'}, {n:'Fire Truck', v:'🚒'}, {n:'Police Car', v:'🚓'}, {n:'Bicycle', v:'🚲'}, {n:'Helicopter', v:'🚁'}, {n:'Rocket', v:'🚀'}, {n:'Truck', v:'🚚'}, {n:'Bus', v:'🚌'}, {n:'Car', v:'🚗'}, {n:'Motorcycle', v:'🏍️'}],
@@ -140,9 +184,9 @@
             school: [{n:'Backpack', v:'🎒'}, {n:'Pencil', v:'✏️'}, {n:'Book', v:'📖'}, {n:'Ruler', v:'📏'}, {n:'Pen', v:'🖊️'}, {n:'Notebook', v:'📒'}, {n:'Pencil Case', v:'👝'}],
             feelings: [{n:'Happy', v:'😊'}, {n:'Sad', v:'😞'}, {n:'Laughing', v:'😆'}, {n:'Crying', v:'😭'}, {n:'Angry', v:'😡'}, {n:'Sleepy', v:'😴'}],
             people: [{n:'Dad', v:'👱🏻‍♂️'}, {n:'Mom', v:'👩🏻'}, {n:'Boy', v:'👦🏻'}, {n:'Girl', v:'👧'}, {n:'Grandmother', v:'👵'}, {n:'Grandfather', v:'👴'}, {n:'Baby', v:'👶🏻'}],
-          shapes: [{n:'Square', v:'🔲'}, {n:'Circle', v:'🔴'}, {n:'Triangle', v:'🔺'}, {n:'Star', v:'⭐'}, {n:'Heart', v:'❤️'}],
-          weather: [{n:'Rain', v:'☔'}, {n:'Sun', v:'🌞'}, {n:'Moon', v:'🌙'}, {n:'Rainbow', v:'🌈'}, {n:'Cloud', v:'☁️'}, {n:'Snow', v:'❄️'}],
-          letters: [{n:'a', v:'A-a'}, {n:'b', v:'B-b'}, {n:'c', v:'C-c'}, {n:'d', v:'D-d'}, {n:'e', v:'E-e'}, {n:'n', v:'N-n'}]
+            shapes: [{n:'Square', v:'🔲'}, {n:'Circle', v:'🔴'}, {n:'Triangle', v:'🔺'}, {n:'Star', v:'⭐'}, {n:'Heart', v:'❤️'}],
+            weather: [{n:'Rain', v:'☔'}, {n:'Sun', v:'🌞'}, {n:'Moon', v:'🌙'}, {n:'Rainbow', v:'🌈'}, {n:'Cloud', v:'☁️'}, {n:'Snow', v:'❄️'}],
+            letters: [{n:'a', v:'A-a'}, {n:'b', v:'B-b'}, {n:'c', v:'C-c'}, {n:'d', v:'D-d'}, {n:'e', v:'E-e'}, {n:'n', v:'N-n'}]
         };
 
         let currentCat = '';
@@ -174,7 +218,6 @@
             const title = document.getElementById('target-text');
             gameContainer.innerHTML = '';
             
-            // Random modu seçilmişse tüm kategorileri birleştir
             let sourceItems = [];
             if (currentCat === 'random') {
                 Object.keys(data).forEach(key => {
@@ -188,7 +231,6 @@
             const items = [...sourceItems].sort(() => Math.random() - 0.5);
 
             if (randomType === 0) {
-                // --- KLASİK BULMA ---
                 const target = items[0];
                 title.innerText = "Find the " + target.n;
                 speak(target.n);
@@ -202,16 +244,23 @@
                 items.slice(0, 4).sort(() => Math.random() - 0.5).forEach(item => {
                     const card = createCard(item);
                     card.onclick = () => {
-                        if(item.n === target.n) { speak("Great Job, Nehir!"); title.innerText = "🌟 CORRECT! 🌟"; setTimeout(nextTurn, 2000); }
-                        else { speak("Ooops!"); card.style.borderColor = "#f44336";
-                        setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);}
+                        if(item.n === target.n) { 
+                            speak(`Great Job, ${userName}!`); 
+                          card.style.borderColor = "#4caf50";
+                            setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);
+                            title.innerText = "🌟 CORRECT! 🌟"; 
+                            setTimeout(nextTurn, 2000); 
+                        }
+                        else { 
+                            speak("Ooops!"); card.style.borderColor = "#f44336";
+                            setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);
+                        }
                     };
                     grid.appendChild(card);
                 });
                 gameContainer.appendChild(grid);
 
             } else if (randomType === 1) {
-                // --- EVET / HAYIR ---
                 const target = items[0];
                 const isCorrect = Math.random() > 0.5;
                 const visual = isCorrect ? target : items[1];
@@ -225,16 +274,15 @@
 
                 const btnGroup = document.createElement('div');
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓';
-                btnY.onclick = () => { if(isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                btnY.onclick = () => { if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕';
-                btnN.onclick = () => { if(!isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                btnN.onclick = () => { if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
 
             } else {
-                // --- 5'Lİ EŞLEŞTİRME ---
                 title.innerText = "Match the sounds!";
                 matchWinCount = 0; activeSoundObj = null; activeSoundElement = null;
                 const set = items.slice(0, 5);
@@ -269,7 +317,7 @@
                             speak("Correct!");
                             matchWinCount++;
                             activeSoundObj = null; activeSoundElement = null;
-                            if(matchWinCount === 5) { speak("Great Job, Nehir!"); title.innerText = "🌟 AMAZING! 🌟"; setTimeout(nextTurn, 2500); }
+                            if(matchWinCount === 5) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 AMAZING! 🌟"; setTimeout(nextTurn, 2500); }
                         } else { 
                           speak("Ooops!"); iBtn.style.borderColor = "#f44336";
                           setTimeout(() => { if(!iBtn.classList.contains('matched')) iBtn.style.borderColor = "#ddd"; }, 500);
