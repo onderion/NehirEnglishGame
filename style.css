@@ -1,0 +1,25 @@
+/* Butonların genel hali */
+.yes-no-btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 24px;
+    color: white;
+    transition: all 0.1s ease; /* Tüm değişimleri yumuşatır */
+    user-select: none; /* Metin seçilmesini engeller */
+    outline: none;
+    box-shadow: 0 4px #999; /* Butonun altındaki derinlik */
+}
+
+/* Mouse ile üzerine gelince (Hover) */
+.yes-no-btn:hover {
+    filter: brightness(1.1); /* Hafifçe parlatır */
+}
+
+/* Tıklandığı an (Active) */
+.yes-no-btn:active {
+    background-color: inherit; 
+    box-shadow: 0 2px #666; /* Gölge küçülür */
+    transform: translateY(2px); /* Buton 2px aşağı kayar (basılma hissi) */
+}
