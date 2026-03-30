@@ -273,10 +273,10 @@
                 gameContainer.appendChild(bigCard);
 
                 const btnGroup = document.createElement('div');
-                const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓';
+                const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✔';
                 btnY.onclick = () => { if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
-                const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕';
+                const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✖';
                 btnN.onclick = () => { if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
