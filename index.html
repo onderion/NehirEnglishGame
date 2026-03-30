@@ -103,16 +103,21 @@
     
     <div id="main-menu" class="menu-grid">
         <button class="random-btn" onclick="startGame('random')">🎲 MIXED / RANDOM</button>
-
+      
         <button class="menu-btn" style="background:#ff6f61" onclick="startGame('toys')">🧸 Toys</button>
         <button class="menu-btn" style="background:#42a5f5" onclick="startGame('colors')">🎨 Colors</button>
         <button class="menu-btn" style="background:#66bb6a" onclick="startGame('animals')">🐶 Animals</button>
         <button class="menu-btn" style="background:#ffca28" onclick="startGame('numbers')">🔢 Numbers</button>
         <button class="menu-btn" style="background:#34495e" onclick="startGame('vehicles')">✈️ Vehicles</button>
         <button class="menu-btn" style="background:#f06292" onclick="startGame('fruits')">🍎 Fruits</button>
-        <button class="menu-btn" style="background:#4db6ac" onclick="startGame('veggies')">🥦 Veggies</button>
-        <button class="menu-btn" style="background:#ba68c8" onclick="startGame('clothes')">👗 Clothes</button>
+        <button class="menu-btn" style="background:#009688" onclick="startGame('veggies')">🍆 Veggies</button>
+        <button class="menu-btn" style="background:#9C27B0" onclick="startGame('clothes')">👗 Clothes</button>
         <button class="menu-btn" style="background:#ffb74d" onclick="startGame('school')">🎒 School</button>
+        <button class="menu-btn" style="background:#CDDC39" onclick="startGame('feelings')">😊 Feelings</button>
+        <button class="menu-btn" style="background:#795548" onclick="startGame('people')">👫 People</button>
+        <button class="menu-btn" style="background:#00BCD4" onclick="startGame('shapes')">💢 Shapes</button>
+        <button class="menu-btn" style="background:#3F51B5" onclick="startGame('weather')">🌄 Weather</button>
+        <button class="menu-btn" style="background:#f44336" onclick="startGame('letters')">🔠 Letters</button>
     </div>
 
     <div id="game-screen" class="game-area">
@@ -124,15 +129,20 @@
 
     <script>
         const data = {
-            toys: [{n:'Teddy Bear', v:'🧸'}, {n:'Doll', v:'🪆'}, {n:'Ball', v:'⚽'}, {n:'Car', v:'🚗'}, {n:'Balloon', v:'🎈'}, {n:'Robot', v:'🤖'}],
+            toys: [{n:'Teddy Bear', v:'🧸'}, {n:'Doll', v:'🪆'}, {n:'Ball', v:'⚽'}, {n:'Car', v:'🚗'}, {n:'Balloon', v:'🎈'}, {n:'Robot', v:'🤖'}, {n:'Kite', v:'🪁'}],
             colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}, {n:'Orange', v:'#ffa500'}, {n:'White', v:'#ffffff'}, {n:'Black', v:'#000000'}],
-            animals: [{n:'Dog', v:'🐶'}, {n:'Cat', v:'🐱'}, {n:'Lion', v:'🦁'}, {n:'Monkey', v:'🐵'}, {n:'Rabbit', v:'🐰'}, {n:'Elephant', v:'🐘'}],
+            animals: [{n:'Dog', v:'🐶'}, {n:'Cat', v:'🐱'}, {n:'Lion', v:'🦁'}, {n:'Monkey', v:'🐵'}, {n:'Rabbit', v:'🐰'}, {n:'Elephant', v:'🐘'}, {n:'Fish', v:'🐟'}, {n:'Bee', v:'🐝'}, {n:'Ant', v:'🐜'}, {n:'Turtle', v:'🐢'}, {n:'Penguin', v:'🐧'}, {n:'Panda', v:'🐼'}, {n:'Cow', v:'🐮'}, {n:'Pig', v:'🐖'}, {n:'Horse', v:'🐴'}, {n:'Mouse', v:'🐀'}, {n:'Bear', v:'🐻'}, {n:'Tiger', v:'🐅'}, {n:'Frog', v:'🐸'}, {n:'Snail', v:'🐌'}, {n:'Fox', v:'🦊'}, {n:'Butterfly', v:'🦋'}, {n:'Zebra', v:'🦓'}, {n:'Giraffe', v:'🦒'}, {n:'Egg', v:'🥚'}],
             numbers: [{n:'One', v:'1'}, {n:'Two', v:'2'}, {n:'Three', v:'3'}, {n:'Four', v:'4'}, {n:'Five', v:'5'}, {n:'Six', v:'6'}],
-            vehicles: [{n:'Airplane', v:'✈️'}, {n:'Ship', v:'🚢'}, {n:'Train', v:'🚂'}, {n:'Fire Truck', v:'🚒'}, {n:'Police Car', v:'🚓'}, {n:'Bicycle', v:'🚲'}, {n:'Helicopter', v:'🚁'}, {n:'Rocket', v:'🚀'}],
-            fruits: [{n:'Apple', v:'🍎'}, {n:'Banana', v:'🍌'}, {n:'Watermelon', v:'🍉'}, {n:'Strawberry', v:'🍓'}, {n:'Carrot', v:'🥕'}, {n:'Grape', v:'🍇'}],
-            veggies: [{n:'Tomato', v:'🍅'}, {n:'Cucumber', v:'🥒'}, {n:'Eggplant', v:'🍆'}, {n:'Corn', v:'🌽'}, {n:'Broccoli', v:'🥦'}, {n:'Potato', v:'🥔'}, {n:'Carrot', v:'🥕'}],
+            vehicles: [{n:'Airplane', v:'✈️'}, {n:'Ship', v:'🚢'}, {n:'Train', v:'🚂'}, {n:'Fire Truck', v:'🚒'}, {n:'Police Car', v:'🚓'}, {n:'Bicycle', v:'🚲'}, {n:'Helicopter', v:'🚁'}, {n:'Rocket', v:'🚀'}, {n:'Truck', v:'🚚'}, {n:'Bus', v:'🚌'}, {n:'Car', v:'🚗'}, {n:'Motorcycle', v:'🛵'}],
+            fruits: [{n:'Apple', v:'🍎'}, {n:'Banana', v:'🍌'}, {n:'Watermelon', v:'🍉'}, {n:'Strawberry', v:'🍓'}, {n:'Grape', v:'🍇'},{n:'Orange', v:'🍊'}, {n:'Lemon', v:'🍋'}, {n:'Cherry', v:'🍒'}, {n:'Kiwi', v:'🥝'}, {n:'Avocado', v:'🥑'}, {n:'Pineapple', v:'🍍'}, {n:'Blueberry', v:'🫐'}],
+            veggies: [{n:'Tomato', v:'🍅'}, {n:'Cucumber', v:'🥒'}, {n:'Eggplant', v:'🍆'}, {n:'Corn', v:'🌽'}, {n:'Broccoli', v:'🥦'}, {n:'Potato', v:'🥔'}, {n:'Carrot', v:'🥕'}, {n:'Mushroom', v:'🍄'}],
             clothes: [{n:'T-shirt', v:'👕'}, {n:'Dress', v:'👗'}, {n:'Hat', v:'👒'}, {n:'Shoes', v:'👟'}, {n:'Socks', v:'🧦'}, {n:'Jacket', v:'🧥'}],
-            school: [{n:'Backpack', v:'🎒'}, {n:'Pencil', v:'✏️'}, {n:'Book', v:'📖'}, {n:'Ruler', v:'📏'}, {n:'Pen', v:'🖊️'}, {n:'Notebook', v:'📒'}, {n:'Pencil Case', v:'👝'}]
+            school: [{n:'Backpack', v:'🎒'}, {n:'Pencil', v:'✏️'}, {n:'Book', v:'📖'}, {n:'Ruler', v:'📏'}, {n:'Pen', v:'🖊️'}, {n:'Notebook', v:'📒'}, {n:'Pencil Case', v:'👝'}],
+            feelings: [{n:'Happy', v:'😊'}, {n:'Sad', v:'😞'}, {n:'Laughing', v:'😆'}, {n:'Crying', v:'😭'}, {n:'Angry', v:'😡'}, {n:'Sleepy', v:'😴'}],
+            people: [{n:'Dad', v:'🧑🏻'}, {n:'Mom', v:'👩🏻'}, {n:'Boy', v:'👦🏻'}, {n:'Girl', v:'👧'}, {n:'Grandmother', v:'👵'}, {n:'Grandfather', v:'👴'}, {n:'Baby', v:'👶🏻'}],
+          shapes: [{n:'Square', v:'🔲'}, {n:'Circle', v:'🔴'}, {n:'Triange', v:'🔺'}, {n:'Star', v:'⭐'}, {n:'Heart', v:'❤️'}],
+          weather: [{n:'Rain', v:'☔'}, {n:'Sun', v:'🌞'}, {n:'Moon', v:'🌙'}, {n:'Rainbow', v:'🌈'}, {n:'Cloud', v:'☁️'}, {n:'Snow', v:'❄️'}],
+          letters: [{n:'A', v:'A-a'}, {n:'B', v:'B-b'}, {n:'C', v:'C-c'}, {n:'D', v:'D-d'}, {n:'E', v:'E-e'}, {n:'N', v:'N-n'}]
         };
 
         let currentCat = '';
@@ -193,7 +203,8 @@
                     const card = createCard(item);
                     card.onclick = () => {
                         if(item.n === target.n) { speak("Great Job, Nehir!"); title.innerText = "🌟 CORRECT! 🌟"; setTimeout(nextTurn, 2000); }
-                        else { speak("Ooops! Try again!"); }
+                        else { speak("Ooops!"); card.style.borderColor = "#f44336";
+                        setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);}
                     };
                     grid.appendChild(card);
                 });
@@ -214,10 +225,10 @@
 
                 const btnGroup = document.createElement('div');
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓';
-                btnY.onclick = () => { if(isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops! Try again!"); };
+                btnY.onclick = () => { if(isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕';
-                btnN.onclick = () => { if(!isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops! Try again!"); };
+                btnN.onclick = () => { if(!isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
@@ -259,7 +270,10 @@
                             matchWinCount++;
                             activeSoundObj = null; activeSoundElement = null;
                             if(matchWinCount === 5) { speak("Great Job, Nehir!"); title.innerText = "🌟 AMAZING! 🌟"; setTimeout(nextTurn, 2500); }
-                        } else { speak("Ooops! Try again!"); }
+                        } else { 
+                          speak("Ooops!"); iBtn.style.borderColor = "#f44336";
+                          setTimeout(() => { if(!iBtn.classList.contains('matched')) iBtn.style.borderColor = "#ddd"; }, 500);
+                        }
                     };
                     iRow.appendChild(iBtn);
                 });
