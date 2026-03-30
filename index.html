@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>English for Nehir - Pro</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fdfdfd;
+            text-align: center;
+            margin: 0;
+            padding: 10px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        h1 { color: #ff6f61; font-size: 24px; }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .menu-btn {
+            padding: 20px 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 5px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+        .game-area {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 500px;
+            margin: 10px auto;
+        }
+        .item-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .card {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 3px solid #eee;
+        }
+        .yes-no-btn {
+            width: 120px;
+            height: 120px;
+            font-size: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            color: white;
+        }
+        #target-text { font-size: 24px; font-weight: bold; color: #333; margin: 15px 0; min-height: 60px; }
+        .speaker-btn { font-size: 60px; background: none; border: none; cursor: pointer; }
+        .sound-option {
+            background: #e3f2fd;
+            border: 3px solid #42a5f5;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌟 English for Nehir 🌟</h1>
+    
+    <div id="main-menu" class="menu-grid">
+        <button class="menu-btn" style="background:#ff6f61" onclick="startGame('toys')">🧸 Toys</button>
+        <button class="menu-btn" style="background:#42a5f5" onclick="startGame('colors')">🎨 Colors</button>
+        <button class="menu-btn" style="background:#66bb6a" onclick="startGame('animals')">🐶 Animals</button>
+        <button class="menu-btn" style="background:#ffca28" onclick="startGame('numbers')">🔢 Numbers</button>
+        <button class="menu-btn" style="background:#ff80ab" onclick="startGame('fruits')">🍎 Fruits</button>
+        <button class="menu-btn" style="background:#ab47bc" onclick="startGame('clothes')">👗 Clothes</button>
+        <button class="menu-btn" style="background:#ffa726" onclick="startGame('school')">🎒 School</button>
+    </div>
+
+    <div id="game-screen" class="game-area">
+        <div id="target-text">Ready?</div>
+        <div id="display-area"></div>
+        <div id="items" class="item-container"></div>
+        <br>
+        <button class="menu-btn" style="background:#9e9e9e; padding: 10px 20px;" onclick="showMenu()">🏠 Menu</button>
+    </div>
+
+    <script>
+        const data = {
+            toys: [{name:'Teddy Bear', val:'🧸'}, {name:'Doll', val:'🪆'}, {name:'Ball', val:'⚽'}, {name:'Car', val:'🚗'}, {name:'Balloon', val:'🎈'}, {name:'Robot', val:'🤖'}],
+            colors: [{name:'Red', val:'#ff0000'}, {name:'Blue', val:'#0000ff'}, {name:'Green', val:'#008000'}, {name:'Yellow', val:'#ffff00'}, {name:'Pink', val:'#ffc0cb'}, {name:'Purple', val:'#800080'}],
+            animals: [{name:'Dog', val:'🐶'}, {name:'Cat', val:'🐱'}, {name:'Lion', val:'🦁'}, {name:'Monkey', val:'🐵'}, {name:'Rabbit', val:'🐰'}, {name:'Elephant', val:'🐘'}],
+            numbers: [{name:'One', val:'1'}, {name:'Two', val:'2'}, {name:'Three', val:'3'}, {name:'Four', val:'4'}, {name:'Five', val:'5'}, {name:'Six', val:'6'}],
+            fruits: [{name:'Apple', val:'🍎'}, {name:'Banana', val:'🍌'}, {name:'Watermelon', val:'🍉'}, {name:'Strawberry', val:'🍓'}, {name:'Carrot', val:'🥕'}, {name:'Grape', val:'🍇'}],
+            clothes: [{name:'T-shirt', val:'👕'}, {name:'Dress', val:'👗'}, {name:'Hat', val:'👒'}, {name:'Shoes', val:'👟'}, {name:'Socks', val:'🧦'}, {name:'Jacket', val:'🧥'}],
+            school: [{name:'Backpack', val:'🎒'}, {name:'Pencil', val:'✏️'}, {name:'Book', val:'📖'}, {name:'Ruler', val:'📏'}, {name:'Pen', val:'🖊️'}, {name:'Notebook', val:'📒'}]
+        };
+
+        let currentMode = '';
+        let targetItem = null;
+        let isTrue = true; // Yes/No modu için
+
+        function speak(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.7;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function showMenu() {
+            document.getElementById('main-menu').style.display = 'grid';
+            document.getElementById('game-screen').style.display = 'none';
+        }
+
+        function startGame(mode) {
+            currentMode = mode;
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'block';
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            const items = data[currentMode];
+            const gameType = Math.floor(Math.random() * 3); // 0, 1 veya 2
+            
+            const display = document.getElementById('display-area');
+            const container = document.getElementById('items');
+            const title = document.getElementById('target-text');
+            
+            display.innerHTML = '';
+            container.innerHTML = '';
+            targetItem = items[Math.floor(Math.random() * items.length)];
+
+            if (gameType === 0) { // MOD 1: KLASIK BULMA
+                title.innerText = "Find the " + targetItem.name;
+                display.innerHTML = `<button class="speaker-btn" onclick="speak('${targetItem.name}')">🔊</button>`;
+                speak(targetItem.name);
+
+                [...items].sort(() => Math.random() - 0.5).slice(0, 4).forEach(item => {
+                    if(![...items].slice(0,4).includes(targetItem)) items[0] = targetItem; // Hedefin ekranda olduğundan emin ol
+                    const div = createCard(item);
+                    div.onclick = () => checkAnswer(item.name === targetItem.name);
+                    container.appendChild(div);
+                });
+
+            } else if (gameType === 1) { // MOD 2: YES / NO
+                isTrue = Math.random() > 0.5;
+                const showItem = isTrue ? targetItem : items[Math.floor(Math.random() * items.length)];
+                
+                title.innerText = "Is this a " + targetItem.name + "?";
+                display.innerHTML = `<div class="card" style="margin:auto; ${currentMode === 'colors' ? 'background:'+showItem.val : ''}">${currentMode === 'colors' ? '' : showItem.val}</div>`;
+                speak("Is this a " + targetItem.name + "?");
+
+                const btnYes = document.createElement('button');
+                btnYes.className = 'yes-no-btn';
+                btnYes.style.background = '#4caf50';
+                btnYes.innerText = '✅';
+                btnYes.onclick = () => checkAnswer(isTrue);
+
+                const btnNo = document.createElement('button');
+                btnNo.className = 'yes-no-btn';
+                btnNo.style.background = '#f44336';
+                btnNo.innerText = '❌';
+                btnNo.onclick = () => checkAnswer(!isTrue);
+
+                container.appendChild(btnYes);
+                container.appendChild(btnNo);
+
+            } else { // MOD 3: SESİ SEÇ
+                title.innerText = "Which one says " + targetItem.name + "?";
+                display.innerHTML = `<div class="card" style="margin:auto; ${currentMode === 'colors' ? 'background:'+targetItem.val : ''}">${currentMode === 'colors' ? '' : targetItem.val}</div>`;
+                
+                const wrongItem = items.find(i => i.name !== targetItem.name);
+                const options = [targetItem, wrongItem].sort(() => Math.random() - 0.5);
+
+                options.forEach(opt => {
+                    const btn = document.createElement('div');
+                    btn.className = 'sound-option';
+                    btn.innerText = '🔊?';
+                    btn.onclick = () => {
+                        speak(opt.name);
+                        setTimeout(() => checkAnswer(opt.name === targetItem.name), 1000);
+                    };
+                    container.appendChild(btn);
+                });
+            }
+        }
+
+        function createCard(item) {
+            const div = document.createElement('div');
+            div.className = 'card';
+            if(currentMode === 'colors') div.style.backgroundColor = item.val;
+            else div.innerText = item.val;
+            return div;
+        }
+
+        function checkAnswer(isCorrect) {
+            if (isCorrect) {
+                speak("Great Job Nehir!");
+                document.getElementById('target-text').innerText = "🌟 CORRECT! 🌟";
+                setTimeout(nextQuestion, 2000);
+            } else {
+                speak("Try again!");
+            }
+        }
+    </script>
+</body>
+</html>
