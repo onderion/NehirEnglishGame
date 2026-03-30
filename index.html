@@ -108,7 +108,7 @@
     <script>
         const data = {
             toys: [{n:'Teddy Bear', v:'🧸'}, {n:'Doll', v:'🪆'}, {n:'Ball', v:'⚽'}, {n:'Car', v:'🚗'}, {n:'Balloon', v:'🎈'}, {n:'Robot', v:'🤖'}],
-            colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}],
+            colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}, {n:'Orange', v:'#ffa500'}],
             animals: [{n:'Dog', v:'🐶'}, {n:'Cat', v:'🐱'}, {n:'Lion', v:'🦁'}, {n:'Monkey', v:'🐵'}, {n:'Rabbit', v:'🐰'}, {n:'Elephant', v:'🐘'}],
             numbers: [{n:'One', v:'1'}, {n:'Two', v:'2'}, {n:'Three', v:'3'}, {n:'Four', v:'4'}, {n:'Five', v:'5'}, {n:'Six', v:'6'}],
             fruits: [{n:'Apple', v:'🍎'}, {n:'Banana', v:'🍌'}, {n:'Watermelon', v:'🍉'}, {n:'Strawberry', v:'🍓'}, {n:'Carrot', v:'🥕'}, {n:'Grape', v:'🍇'}],
@@ -231,8 +231,8 @@
                             speak("Correct!");
                             matchWinCount++;
                             activeSoundObj = null; activeSoundElement = null;
-                            if(matchWinCount === 5) { speak("Great Job Nehir!"); title.innerText = "🌟 AMAZING! 🌟"; setTimeout(nextTurn, 2500); }
-                        } else { speak("Try again!"); }
+                            if(matchWinCount === 5) { speak("Great Job, Nehir!"); title.innerText = "🌟 AMAZING! 🌟"; setTimeout(nextTurn, 2500); }
+                        } else { speak("Ooops! Try again!"); }
                     };
                     iRow.appendChild(iBtn);
                 });
