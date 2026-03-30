@@ -5,7 +5,7 @@
     border-radius: 12px;
     padding: 10px 20px;
     font-size: 24px;
-    color: #fff;
+    color: #fff !important;
     transition: all 0.1s ease; /* Tüm değişimleri yumuşatır */
     user-select: none; /* Metin seçilmesini engeller */
     outline: none;
