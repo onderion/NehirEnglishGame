@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>English for Nehir - Final Fixed</title>
+    <title>English for Nehir - Random Mode</title>
     <style>
-        /* Tamamen okunaklı ve düz fontlar */
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #f0f4f8;
@@ -24,6 +23,22 @@
             max-width: 500px;
             margin: 0 auto;
         }
+        
+        /* Random Butonu için özel stil */
+        .random-btn {
+            grid-column: span 2; /* İki sütunu kaplar */
+            padding: 25px;
+            font-size: 22px;
+            background: linear-gradient(45deg, #ff6f61, #ffca28);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: 900;
+            margin-bottom: 5px;
+            cursor: pointer;
+            box-shadow: 0 6px rgba(0,0,0,0.1);
+        }
+
         .menu-btn {
             padding: 20px 10px;
             font-size: 18px;
@@ -55,7 +70,6 @@
             margin: 10px 0;
         }
 
-        /* Kart Tasarımları */
         .card {
             width: 90px; height: 90px;
             display: flex; align-items: center; justify-content: center;
@@ -64,7 +78,6 @@
             border: 4px solid #eee; transition: 0.2s;
         }
 
-        /* Eşleştirme Modu Kartları */
         .sound-card { width: 75px; height: 75px; font-size: 35px; background: #e1f5fe; border: 4px solid #b3e5fc; border-radius: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .image-card { width: 75px; height: 75px; font-size: 40px; background: #fff; border: 4px solid #eee; border-radius: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         
@@ -89,11 +102,15 @@
     <h1>🌟 English for Nehir 🌟</h1>
     
     <div id="main-menu" class="menu-grid">
+        <button class="random-btn" onclick="startGame('random')">🎲 MIXED / RANDOM</button>
+
         <button class="menu-btn" style="background:#ff6f61" onclick="startGame('toys')">🧸 Toys</button>
         <button class="menu-btn" style="background:#42a5f5" onclick="startGame('colors')">🎨 Colors</button>
         <button class="menu-btn" style="background:#66bb6a" onclick="startGame('animals')">🐶 Animals</button>
         <button class="menu-btn" style="background:#ffca28" onclick="startGame('numbers')">🔢 Numbers</button>
+        <button class="menu-btn" style="background:#34495e" onclick="startGame('vehicles')">✈️ Vehicles</button>
         <button class="menu-btn" style="background:#f06292" onclick="startGame('fruits')">🍎 Fruits</button>
+        <button class="menu-btn" style="background:#4db6ac" onclick="startGame('veggies')">🥦 Veggies</button>
         <button class="menu-btn" style="background:#ba68c8" onclick="startGame('clothes')">👗 Clothes</button>
         <button class="menu-btn" style="background:#ffb74d" onclick="startGame('school')">🎒 School</button>
     </div>
@@ -108,17 +125,19 @@
     <script>
         const data = {
             toys: [{n:'Teddy Bear', v:'🧸'}, {n:'Doll', v:'🪆'}, {n:'Ball', v:'⚽'}, {n:'Car', v:'🚗'}, {n:'Balloon', v:'🎈'}, {n:'Robot', v:'🤖'}],
-            colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}, {n:'Orange', v:'#ffa500'}],
+            colors: [{n:'Red', v:'#ff0000'}, {n:'Blue', v:'#0000ff'}, {n:'Green', v:'#008000'}, {n:'Yellow', v:'#ffff00'}, {n:'Pink', v:'#ffc0cb'}, {n:'Purple', v:'#800080'}, {n:'Orange', v:'#ffa500'}, {n:'White', v:'#ffffff'}, {n:'Black', v:'#000000'}],
             animals: [{n:'Dog', v:'🐶'}, {n:'Cat', v:'🐱'}, {n:'Lion', v:'🦁'}, {n:'Monkey', v:'🐵'}, {n:'Rabbit', v:'🐰'}, {n:'Elephant', v:'🐘'}],
             numbers: [{n:'One', v:'1'}, {n:'Two', v:'2'}, {n:'Three', v:'3'}, {n:'Four', v:'4'}, {n:'Five', v:'5'}, {n:'Six', v:'6'}],
+            vehicles: [{n:'Airplane', v:'✈️'}, {n:'Ship', v:'🚢'}, {n:'Train', v:'🚂'}, {n:'Fire Truck', v:'🚒'}, {n:'Police Car', v:'🚓'}, {n:'Bicycle', v:'🚲'}, {n:'Helicopter', v:'🚁'}, {n:'Rocket', v:'🚀'}],
             fruits: [{n:'Apple', v:'🍎'}, {n:'Banana', v:'🍌'}, {n:'Watermelon', v:'🍉'}, {n:'Strawberry', v:'🍓'}, {n:'Carrot', v:'🥕'}, {n:'Grape', v:'🍇'}],
+            veggies: [{n:'Tomato', v:'🍅'}, {n:'Cucumber', v:'🥒'}, {n:'Eggplant', v:'🍆'}, {n:'Corn', v:'🌽'}, {n:'Broccoli', v:'🥦'}, {n:'Potato', v:'🥔'}, {n:'Carrot', v:'🥕'}],
             clothes: [{n:'T-shirt', v:'👕'}, {n:'Dress', v:'👗'}, {n:'Hat', v:'👒'}, {n:'Shoes', v:'👟'}, {n:'Socks', v:'🧦'}, {n:'Jacket', v:'🧥'}],
-            school: [{n:'Backpack', v:'🎒'}, {n:'Pencil', v:'✏️'}, {n:'Book', v:'📖'}, {n:'Ruler', v:'📏'}, {n:'Pen', v:'🖊️'}, {n:'Notebook', v:'📒'}]
+            school: [{n:'Backpack', v:'🎒'}, {n:'Pencil', v:'✏️'}, {n:'Book', v:'📖'}, {n:'Ruler', v:'📏'}, {n:'Pen', v:'🖊️'}, {n:'Notebook', v:'📒'}, {n:'Pencil Case', v:'👝'}]
         };
 
         let currentCat = '';
-        let activeSoundObj = null; // Eşleştirme için seçili olan nesne
-        let activeSoundElement = null; // Eşleştirme için seçili olan buton
+        let activeSoundObj = null;
+        let activeSoundElement = null;
         let matchWinCount = 0;
 
         function speak(text) {
@@ -145,8 +164,18 @@
             const title = document.getElementById('target-text');
             gameContainer.innerHTML = '';
             
-            const randomType = Math.floor(Math.random() * 3); // 0: Klasik, 1: Evet/Hayır, 2: Eşleştirme
-            const items = [...data[currentCat]].sort(() => Math.random() - 0.5);
+            // Random modu seçilmişse tüm kategorileri birleştir
+            let sourceItems = [];
+            if (currentCat === 'random') {
+                Object.keys(data).forEach(key => {
+                    sourceItems = sourceItems.concat(data[key]);
+                });
+            } else {
+                sourceItems = data[currentCat];
+            }
+
+            const randomType = Math.floor(Math.random() * 3);
+            const items = [...sourceItems].sort(() => Math.random() - 0.5);
 
             if (randomType === 0) {
                 // --- KLASİK BULMA ---
@@ -163,8 +192,8 @@
                 items.slice(0, 4).sort(() => Math.random() - 0.5).forEach(item => {
                     const card = createCard(item);
                     card.onclick = () => {
-                        if(item.n === target.n) { speak("Great Job Nehir!"); title.innerText = "🌟 CORRECT! 🌟"; setTimeout(nextTurn, 2000); }
-                        else { speak("Try again!"); }
+                        if(item.n === target.n) { speak("Great Job, Nehir!"); title.innerText = "🌟 CORRECT! 🌟"; setTimeout(nextTurn, 2000); }
+                        else { speak("Ooops! Try again!"); }
                     };
                     grid.appendChild(card);
                 });
@@ -185,16 +214,16 @@
 
                 const btnGroup = document.createElement('div');
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓';
-                btnY.onclick = () => { if(isCorrect) { speak("Great Job Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Try again!"); };
+                btnY.onclick = () => { if(isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops! Try again!"); };
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕';
-                btnN.onclick = () => { if(!isCorrect) { speak("Great Job Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Try again!"); };
+                btnN.onclick = () => { if(!isCorrect) { speak("Great Job, Nehir!"); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops! Try again!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
 
             } else {
-                // --- 5'Lİ EŞLEŞTİRME (EN STABİL MANTIK) ---
+                // --- 5'Lİ EŞLEŞTİRME ---
                 title.innerText = "Match the sounds!";
                 matchWinCount = 0; activeSoundObj = null; activeSoundElement = null;
                 const set = items.slice(0, 5);
@@ -202,7 +231,6 @@
                 const sRow = document.createElement('div'); sRow.className = 'item-container';
                 const iRow = document.createElement('div'); iRow.className = 'item-container';
 
-                // Ses Butonları
                 [...set].sort(() => Math.random() - 0.5).forEach(item => {
                     const sBtn = document.createElement('div');
                     sBtn.className = 'sound-card'; sBtn.innerHTML = '🔊';
@@ -217,7 +245,6 @@
                     sRow.appendChild(sBtn);
                 });
 
-                // Resim Butonları
                 [...set].sort(() => Math.random() - 0.5).forEach(item => {
                     const iBtn = document.createElement('div');
                     iBtn.className = 'image-card';
