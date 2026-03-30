@@ -5,7 +5,7 @@
     border-radius: 12px;
     padding: 10px 20px;
     font-size: 24px;
-    color: white;
+    color: #fff;
     transition: all 0.1s ease; /* Tüm değişimleri yumuşatır */
     user-select: none; /* Metin seçilmesini engeller */
     outline: none;
@@ -14,7 +14,7 @@
 
 /* Mouse ile üzerine gelince (Hover) */
 .yes-no-btn:hover {
-    filter: brightness(1.1); /* Hafifçe parlatır */
+    filter: brightness(1.4); /* Hafifçe parlatır */
 }
 
 /* Tıklandığı an (Active) */
