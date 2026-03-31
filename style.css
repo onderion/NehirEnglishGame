@@ -14,9 +14,13 @@
     box-shadow: 0 4px #999; /* Butonun altındaki derinlik */
 }
 
-/* Mouse ile üzerine gelince (Hover) */
-.yes-no-btn:hover {
+
+/* Tıklandığı an (Active) */
+.yes-no-btn:active {
+    background-color: inherit; 
     animation: flashOnce 0.8s ease-in-out; 
+    box-shadow: 0 2px #666; /* Gölge küçülür */
+    transform: translateY(2px); /* Buton 2px aşağı kayar (basılma hissi) */
 }
 
 /* Parlama efekti animasyonu: 0'da başlar, 50% de parlar, 100% de söner */
@@ -24,11 +28,4 @@
     0% { filter: brightness(1); }
     50% { filter: brightness(1.6); transform: scale(1.1); }
     100% { filter: brightness(1); transform: scale(1); }
-}
-
-/* Tıklandığı an (Active) */
-.yes-no-btn:active {
-    background-color: inherit; 
-    box-shadow: 0 2px #666; /* Gölge küçülür */
-    transform: translateY(2px); /* Buton 2px aşağı kayar (basılma hissi) */
 }
