@@ -17,6 +17,14 @@
 /* Mouse ile üzerine gelince (Hover) */
 .yes-no-btn:hover {
     filter: brightness(1.4); /* Hafifçe parlatır */
+    animation: flashOnce 0.8s ease-in-out; 
+}
+
+/* Parlama efekti animasyonu: 0'da başlar, 50% de parlar, 100% de söner */
+@keyframes flashOnce {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.6); transform: scale(1.1); }
+    100% { filter: brightness(1); transform: scale(1); }
 }
 
 /* Tıklandığı an (Active) */
