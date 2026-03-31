@@ -15,9 +15,16 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-.yes-no-btn.pressed {
+/* Basılma anı */
+.yes-no-btn:active {
     transform: translateY(4px) scale(0.97);
     box-shadow: 0 2px #666;
-    filter: brightness(1.4);
-    transition: all 0.15s ease;
+    animation: flashOnce 0.4s ease;
+}
+
+/* Parlama efekti animasyonu: 0'da başlar, 50% de parlar, 100% de söner */ 
+@keyframes flashOnce { 
+    0% { filter: brightness(1);  transform: scale(1); } 
+    50% { filter: brightness(1.6); transform: scale(0.92); } 
+    100% { filter: brightness(1); transform: scale(1); } 
 }
