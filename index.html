@@ -213,7 +213,7 @@
             nextTurn();
         }
 
-        function flashButton(btn) {
+        function flashButton(btnY) {
         // pressed class ekle
         btn.classList.add('active');
 
@@ -286,7 +286,6 @@
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓'; btnY.style.color = '#ffffff';
                 btnY.onclick = () => { 
                     flashButton(btnY);       // basılınca flash
-                    btnN.classList.remove('active');
                     if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕'; btnN.style.color = '#ffffff';
