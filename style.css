@@ -16,7 +16,7 @@
 
 
 /* Tıklandığı an (Active) */
-.yes-no-btn:active {
+.yes-no-btn:hover {
     background-color: inherit; 
     animation: flashOnce 0.8s ease-in-out; 
     box-shadow: 0 2px #666; /* Gölge küçülür */
