@@ -213,6 +213,16 @@
             nextTurn();
         }
 
+        function flashButton(btn) {
+        // pressed class ekle
+        btn.classList.add('pressed');
+
+        // kısa süre sonra kaldır
+        setTimeout(() => {
+        btn.classList.remove('pressed');
+            }, 150); // 150ms yeterli, animasyon süresine göre ayarla
+        }
+
         function nextTurn() {
             const gameContainer = document.getElementById('game-content');
             const title = document.getElementById('target-text');
@@ -274,10 +284,16 @@
 
                 const btnGroup = document.createElement('div');
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓'; btnY.style.color = '#ffffff';
-                btnY.onclick = () => { if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                btnY.onclick = () => { 
+                    flashButton(btnY);       // basılınca flash
+                    btnN.classList.remove('pressed');
+                    if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕'; btnN.style.color = '#ffffff';
-                btnN.onclick = () => { if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                btnN.onclick = () => {
+                    flashButton(btnN);       // basılınca flash
+                    btnY.classList.remove('pressed'); // diğer buton sıfırlansın
+                    if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
