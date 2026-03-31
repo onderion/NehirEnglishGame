@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title id="page-title">English for Kids</title>
-    <link rel="stylesheet" href="style.css">
+
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -106,6 +106,7 @@
             font-size: 55px; border-radius: 50%;
             border: none; cursor: pointer; margin: 15px;
             color: white; font-weight: bold;
+            box-shadow: 0 6px rgba(0,0,0,0.2);
             display: inline-flex; align-items: center; justify-content: center;
         }
         
@@ -275,11 +276,11 @@
                 const btnGroup = document.createElement('div');
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓'; btnY.style.color = '#ffffff';
                 btnY.onclick = () => {
-                    if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                    if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; box-shadow: 0 2px #999; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕'; btnN.style.color = '#ffffff';
                 btnN.onclick = () => {
-                    if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                    if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; box-shadow: 0 2px #999; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
