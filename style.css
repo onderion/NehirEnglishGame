@@ -16,7 +16,6 @@
 
 /* Mouse ile üzerine gelince (Hover) */
 .yes-no-btn:hover {
-    filter: brightness(1.4); /* Hafifçe parlatır */
     animation: flashOnce 0.8s ease-in-out; 
 }
 
