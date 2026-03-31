@@ -290,9 +290,7 @@
                 
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕'; btnN.style.color = '#ffffff';
                 btnN.onclick = () => {
-                    flashButton(btnN);       // basılınca flash
-                    btnY.classList.remove('active'); // diğer buton sıfırlansın
-                    if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
+                   if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; setTimeout(nextTurn, 2000); } else speak("Ooops!"); };
                 
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
