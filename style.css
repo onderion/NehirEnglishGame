@@ -19,12 +19,19 @@
 .yes-no-btn:active {
     transform: translateY(4px) scale(0.97);
     box-shadow: 0 2px #666;
-    filter: brightness(1.2);
     animation: clickPop 0.2s ease;
+    animation: flashOnce 0.8s ease-in-out;
 }
 
 @keyframes clickPop {
     0% { transform: scale(1); }
     50% { transform: scale(0.92); }
     100% { transform: scale(1); }
+}
+
+/* Parlama efekti animasyonu: 0'da başlar, 50% de parlar, 100% de söner */ 
+@keyframes flashOnce { 
+    0% { filter: brightness(1); } 
+    50% { filter: brightness(1.6); transform: scale(1.1); } 
+    100% { filter: brightness(1); transform: scale(1); } 
 }
