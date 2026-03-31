@@ -16,7 +16,7 @@
 }
 
 /* Basılma anı */
-.yes-no-btn.pressed {
+.yes-no-btn:active {
     transform: translateY(4px) scale(0.97);
     box-shadow: 0 2px #666;
     animation: flashOnce 0.4s ease;
