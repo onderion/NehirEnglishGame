@@ -304,7 +304,7 @@
         // iOS'ta en iyi sesler: Samantha, Nicky, Aaron veya Siri
         const preferredVoice = availableVoices.find(v => 
         (v.lang.includes('en')) && 
-        (v.name.includes('Siri'))
+        (v.name.includes('Samantha') || v.name.includes('Siri') || v.name.includes('Allison') || v.name.includes('Ava') || v.name.includes('Susan') || v.name.includes('Tom') || v.name.includes('Zoe') || v.name.includes('Jamie') || v.name.includes('Kate'))
         );
 
         if (preferredVoice) {
