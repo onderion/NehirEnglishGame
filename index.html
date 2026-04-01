@@ -13,6 +13,7 @@
             padding: 10px;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            overflow: hidden; /* Animasyonlar sırasında kaydırma çubuğu çıkmasın */
         }
         h1 { color: #ff6f61; font-size: 24px; margin: 10px 0; font-weight: bold; }
         
@@ -111,6 +112,25 @@
         
         .speaker-btn { font-size: 70px; background: none; border: none; cursor: pointer; }
         hr { border: 0; height: 2px; background: #eee; margin: 15px 0; width: 100%; }
+
+        /* --- Animasyon Keyframeleri (CSS korundu, yenileri eklendi) --- */
+        @keyframes floatBalloon {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        /* Hayvanın köşeden çıkma animasyonu */
+        @keyframes peekAnimal {
+            0% { right: -150px; bottom: -150px; }
+            30% { right: 20px; bottom: 20px; }
+            70% { right: 20px; bottom: 20px; }
+            100% { right: -150px; bottom: -150px; }
+        }
+        /* Sevimli el sallama animasyonu */
+        @keyframes waveHand {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+            100% { transform: rotate(0deg); }
+        }
     </style>
 </head>
 <body>
@@ -126,7 +146,6 @@
     
     <div id="main-menu" class="menu-grid">
         <button class="random-btn" onclick="startGame('random')">🎲 MIXED / RANDOM</button>
-      
         <button class="menu-btn" style="background:#ff6f61" onclick="startGame('toys')">🧸 Toys</button>
         <button class="menu-btn" style="background:#42a5f5" onclick="startGame('colors')">🎨 Colors</button>
         <button class="menu-btn" style="background:#66bb6a" onclick="startGame('animals')">🐶 Animals</button>
@@ -147,29 +166,91 @@
         <div id="target-text">Ready?</div>
         <div id="game-content"></div>
         <br>
-        <button class="menu-btn" style="background:#90a4ae; padding: 10px 20px; font-size:28px;" onclick="showMenu()">🏠 Menu</button>
+        <button class="menu-btn" style="background:#90a4ae; padding: 10px 20px; font-size:14px;" onclick="showMenu()">🏠 Menu</button>
     </div>
 
     <script>
-        // İsim Değişkeni
-        let userName = "Nehir"; // Varsayılan
+        let userName = "Nehir";
+        let correctCounter = 0; // Doğru cevapları saymak için
 
         function saveName() {
             const input = document.getElementById('user-name-input');
-            if(input.value.trim() !== "") {
-                userName = input.value.trim();
-            }
-            
-            // Başlıkları Güncelle
+            if(input.value.trim() !== "") { userName = input.value.trim(); }
             document.getElementById('game-main-title').innerText = `🌟 English for ${userName} 🌟`;
             document.getElementById('page-title').innerText = `English for ${userName}`;
-            
-            // Ekranları değiştir
             document.getElementById('name-screen').style.display = 'none';
             document.getElementById('main-menu').style.display = 'grid';
-            
-            // İlk sesi tetikle (Safari/iOS için ses kilidini açar)
             speak(`Hello ${userName}, let's learn English!`);
+        }
+
+        // Geliştirilmiş Animasyon Fonksiyonu
+        function triggerMilestoneAnimation() {
+                       
+            // Balonlar Oluştur
+            const balloons = ['🎈', '🌈', '⭐', '✨', '🎈', '💖'];
+            balloons.forEach((b, i) => {
+                const balloon = document.createElement('div');
+                balloon.innerText = b;
+                balloon.style.position = 'fixed';
+                balloon.style.left = (Math.random() * 80 + 10) + 'vw';
+                balloon.style.fontSize = '60px';
+                balloon.style.zIndex = '9999';
+                balloon.style.animation = 'floatBalloon 3s linear forwards';
+                balloon.style.animationDelay = (i * 0.4) + 's';
+                document.body.appendChild(balloon);
+                setTimeout(() => balloon.remove(), 4000);
+            });
+
+            // Rastgele Sevimli Hayvan Seç
+            const encouragingAnimals = [
+                {emoji: '🐵', speech: 'Keep going!'}, // Maymun
+                {emoji: '🐱', speech: 'Purrfect!'},   // Kedi
+                {emoji: '🐶', speech: 'Woof Woof!'},   // Köpek
+                {emoji: '🐰', speech: 'Hop Hop!'},     // Tavşan
+                {emoji: '🐼', speech: 'Awesome!'},     // Panda
+                {emoji: '🐮', speech: 'Moo Moo!'},     // İnek
+                {emoji: '😊', speech: 'Fantastic!'}     // Smile
+            ];
+            const selected = encouragingAnimals[Math.floor(Math.random() * encouragingAnimals.length)];
+
+            // El Sallayan Hayvan Oluştur
+            const animalHolder = document.createElement('div');
+            animalHolder.style.position = 'fixed';
+            animalHolder.style.zIndex = '9999';
+            animalHolder.style.animation = 'peekAnimal 4s ease-in-out forwards';
+            animalHolder.style.textAlign = 'center';
+
+            // Hayvan Emojisi ve El Sallama Animasyonu
+            const emojiEl = document.createElement('div');
+            emojiEl.innerText = selected.emoji;
+            emojiEl.style.fontSize = '100px';
+            emojiEl.style.animation = 'waveHand 0.6s ease-in-out infinite'; // Sürekli el sallar
+            
+            // Konuşma Balonu
+            const speechEl = document.createElement('div');
+            speechEl.innerText = selected.speech;
+            speechEl.style.background = 'white';
+            speechEl.style.padding = '8px 15px';
+            speechEl.style.borderRadius = '15px';
+            speechEl.style.fontWeight = 'bold';
+            speechEl.style.color = '#ff6f61';
+            speechEl.style.border = '3px solid #ffca28';
+            speechEl.style.marginTop = '-10px'; // Emojinin altına yaklaştır
+            speechEl.style.fontSize = '20px';
+            speechEl.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+
+            animalHolder.appendChild(emojiEl);
+            animalHolder.appendChild(speechEl);
+            document.body.appendChild(animalHolder);
+            
+            setTimeout(() => animalHolder.remove(), 4500);
+        }
+
+        function checkMilestone() {
+            correctCounter++;
+            if (correctCounter % 5 === 0) {
+                setTimeout(triggerMilestoneAnimation, 500);
+            }
         }
 
         const data = {
@@ -217,16 +298,10 @@
             const gameContainer = document.getElementById('game-content');
             const title = document.getElementById('target-text');
             gameContainer.innerHTML = '';
-            
             let sourceItems = [];
             if (currentCat === 'random') {
-                Object.keys(data).forEach(key => {
-                    sourceItems = sourceItems.concat(data[key]);
-                });
-            } else {
-                sourceItems = data[currentCat];
-            }
-
+                Object.keys(data).forEach(key => { sourceItems = sourceItems.concat(data[key]); });
+            } else { sourceItems = data[currentCat]; }
             const randomType = Math.floor(Math.random() * 3);
             const items = [...sourceItems].sort(() => Math.random() - 0.5);
 
@@ -234,104 +309,55 @@
                 const target = items[0];
                 title.innerText = "Find the " + target.n;
                 speak(target.n);
-                
                 const btnSpk = document.createElement('button');
                 btnSpk.className = 'speaker-btn'; btnSpk.innerHTML = '🔊';
                 btnSpk.onclick = () => speak(target.n);
                 gameContainer.appendChild(btnSpk);
-
                 const grid = document.createElement('div'); grid.className = 'item-container';
                 items.slice(0, 4).sort(() => Math.random() - 0.5).forEach(item => {
                     const card = createCard(item);
                     card.onclick = () => {
                         if(item.n === target.n) { 
                             speak(`Great Job, ${userName}!`); 
-                          card.style.borderColor = "#4caf50";
-                            setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);
                             title.innerText = "🌟 CORRECT! 🌟"; 
+                            checkMilestone();
                             setTimeout(nextTurn, 2000); 
                         }
-                        else { 
-                            speak("Ooops!"); card.style.borderColor = "#f44336";
-                            setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);
-                        }
+                        else { speak("Ooops!"); card.style.borderColor = "#f44336"; setTimeout(() => { card.style.borderColor = "#ddd"; }, 500); }
                     };
                     grid.appendChild(card);
                 });
                 gameContainer.appendChild(grid);
-
             } else if (randomType === 1) {
                 const target = items[0];
                 const isCorrect = Math.random() > 0.5;
                 const visual = isCorrect ? target : items[1];
-                
                 title.innerText = "Is this a " + target.n + "?";
                 speak("Is this a " + target.n + "?");
-
                 const bigCard = createCard(visual);
                 bigCard.style.margin = "20px auto";
                 gameContainer.appendChild(bigCard);
-
                 const btnGroup = document.createElement('div');
-                const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓';   btnY.style.color = '#ffffff';
+                const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓'; btnY.style.color = '#ffffff';
                 btnY.onclick = () => {
-                // 1. Basılma efekti: Gölgeyi sil ve butonu biraz aşağı kaydır
-                btnY.style.boxShadow = 'none';
-                btnY.style.filter = 'brightness(1.6)';
-                btnY.style.transform = 'translateY(4px)';
-
-                // 2. 150ms sonra eski haline döndür
-                setTimeout(() => {
-                btnY.style.boxShadow = '0 6px rgba(0,0,0,0.2)';
-                btnY.style.filter = 'brightness(1)';
-                btnY.style.transform = 'translateY(0px)';
-                }, 250);
-
-                // Oyun mantığı
-                if(isCorrect) { 
-                speak(`Great Job, ${userName}!`); 
-                title.innerText = "🌟 YES! 🌟"; 
-                setTimeout(nextTurn, 2000); 
-                } else {
-                speak("Ooops!");
-                  }
-                };  
-                
+                    btnY.style.boxShadow = 'none'; btnY.style.filter = 'brightness(1.6)'; btnY.style.transform = 'translateY(4px)';
+                    setTimeout(() => { btnY.style.boxShadow = '0 6px rgba(0,0,0,0.2)'; btnY.style.filter = 'brightness(1)'; btnY.style.transform = 'translateY(0px)'; }, 250);
+                    if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; checkMilestone(); setTimeout(nextTurn, 2000); } else speak("Ooops!");
+                };
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕'; btnN.style.color = '#ffffff';
                 btnN.onclick = () => {
-                // 1. Basılma efekti: Gölgeyi sil ve butonu biraz aşağı kaydır
-                btnN.style.boxShadow = 'none';
-                btnN.style.filter = 'brightness(1.6)';
-                btnN.style.transform = 'translateY(4px)';
-
-                // 2. 150ms sonra eski haline döndür
-                setTimeout(() => {
-                btnN.style.boxShadow = '0 6px rgba(0,0,0,0.2)';
-                btnN.style.filter = 'brightness(1)';
-                btnN.style.transform = 'translateY(0px)';
-                }, 250);
-
-                // Oyun mantığı
-                if(!isCorrect) { 
-                speak(`Great Job, ${userName}!`); 
-                title.innerText = "🌟 YES! 🌟"; 
-                setTimeout(nextTurn, 2000); 
-                } else {
-                speak("Ooops!");
-                  }
+                    btnN.style.boxShadow = 'none'; btnN.style.filter = 'brightness(1.6)'; btnN.style.transform = 'translateY(4px)';
+                    setTimeout(() => { btnN.style.boxShadow = '0 6px rgba(0,0,0,0.2)'; btnN.style.filter = 'brightness(1)'; btnN.style.transform = 'translateY(0px)'; }, 250);
+                    if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; checkMilestone(); setTimeout(nextTurn, 2000); } else speak("Ooops!");
                 };
-                
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
                 gameContainer.appendChild(btnGroup);
-
             } else {
                 title.innerText = "Match the sounds!";
                 matchWinCount = 0; activeSoundObj = null; activeSoundElement = null;
                 const set = items.slice(0, 5);
-
                 const sRow = document.createElement('div'); sRow.className = 'item-container';
                 const iRow = document.createElement('div'); iRow.className = 'item-container';
-
                 [...set].sort(() => Math.random() - 0.5).forEach(item => {
                     const sBtn = document.createElement('div');
                     sBtn.className = 'sound-card'; sBtn.innerHTML = '🔊';
@@ -340,12 +366,10 @@
                         speak(item.n);
                         document.querySelectorAll('.sound-card').forEach(b => b.classList.remove('selected'));
                         sBtn.classList.add('selected');
-                        activeSoundObj = item;
-                        activeSoundElement = sBtn;
+                        activeSoundObj = item; activeSoundElement = sBtn;
                     };
                     sRow.appendChild(sBtn);
                 });
-
                 [...set].sort(() => Math.random() - 0.5).forEach(item => {
                     const iBtn = document.createElement('div');
                     iBtn.className = 'image-card';
@@ -353,21 +377,14 @@
                     iBtn.onclick = () => {
                         if(iBtn.classList.contains('matched') || !activeSoundObj) return;
                         if(activeSoundObj.n === item.n) {
-                            iBtn.classList.add('matched');
-                            activeSoundElement.classList.add('matched');
-                            activeSoundElement.innerHTML = '✅';
-                            speak("Correct!");
-                            matchWinCount++;
-                            activeSoundObj = null; activeSoundElement = null;
-                            if(matchWinCount === 5) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 AMAZING! 🌟"; setTimeout(nextTurn, 2500); }
-                        } else { 
-                          speak("Ooops!"); iBtn.style.borderColor = "#f44336";
-                          setTimeout(() => { if(!iBtn.classList.contains('matched')) iBtn.style.borderColor = "#ddd"; }, 500);
-                        }
+                            iBtn.classList.add('matched'); activeSoundElement.classList.add('matched');
+                            activeSoundElement.innerHTML = '✅'; 
+                            matchWinCount++; activeSoundObj = null; activeSoundElement = null;
+                            if(matchWinCount === 5) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 AMAZING! 🌟"; checkMilestone(); setTimeout(nextTurn, 2500); }
+                        } else { speak("Ooops!"); iBtn.style.borderColor = "#f44336"; setTimeout(() => { if(!iBtn.classList.contains('matched')) iBtn.style.borderColor = "#ddd"; }, 500); }
                     };
                     iRow.appendChild(iBtn);
                 });
-
                 gameContainer.appendChild(sRow);
                 gameContainer.appendChild(document.createElement('hr'));
                 gameContainer.appendChild(iRow);
