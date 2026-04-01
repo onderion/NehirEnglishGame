@@ -281,44 +281,42 @@
         let activeSoundObj = null;
         let activeSoundElement = null;
         let matchWinCount = 0;
+        let availableVoices = [];
 
-        /*function speak(text) {
-            window.speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(text);
-            u.lang = 'en-US'; u.rate = 0.7;
-            window.speechSynthesis.speak(u);
+        // Ses listesini güncelleyen fonksiyon
+        function loadVoices() {
+        availableVoices = window.speechSynthesis.getVoices();
         }
-        */
+
+        // iOS için ses listesi değişimini dinle
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
 
         function speak(text) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(text);
     
-        // Cihazdaki tüm sesleri al
-        const voices = window.speechSynthesis.getVoices();
-    
-        // İngilizce (US) ve daha doğal tınılı sesleri ara
-        // iOS'ta 'Samantha' genelde en yumuşak olanıdır.
-        const preferredVoice = voices.find(v => 
-        (v.lang === 'en-US' || v.lang === 'en_US') && 
-        (v.name.includes('Samantha') || v.name.includes('Nicky') || v.name.includes('Enhanced'))
+        // Eğer liste henüz boşsa tekrar doldurmayı dene
+        if (availableVoices.length === 0) {
+        availableVoices = window.speechSynthesis.getVoices();
+        }
+
+        // iOS'ta en iyi sesler: Samantha, Nicky, Aaron veya Siri
+        const preferredVoice = availableVoices.find(v => 
+        (v.lang.includes('en')) && 
+        (v.name.includes('Samantha') || v.name.includes('Siri') || v.name.includes('Allison') || v.name.includes('Ava') || v.name.includes('Susan') || v.name.includes('Tom') || v.name.includes('Zoe') || v.name.includes('Jamie') || v.name.includes('Kate'))
         );
 
         if (preferredVoice) {
         u.voice = preferredVoice;
         }
 
-        u.lang = 'en-US'; 
-        u.rate = 0.8; // Hızı biraz daha düşürerek daha anlaşılır ve yumuşak kıldık
-        u.pitch = 1.1; // Sesi çok hafif incelterek daha çocuksu/sempatik bir tona çektik
+        u.lang = 'en-US';
+        u.rate = 0.8; 
+        u.pitch = 1.1; 
     
         window.speechSynthesis.speak(u);
         }
-
-        // iOS Safari'de seslerin yüklenmesi zaman alabilir, bu yüzden listeyi hazır tutalım
-        window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-        };
         
         function showMenu() {
             document.getElementById('main-menu').style.display = 'grid';
