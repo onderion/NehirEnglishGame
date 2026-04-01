@@ -166,20 +166,25 @@
         <div id="target-text">Ready?</div>
         <div id="game-content"></div>
         <br>
-        <button class="menu-btn" style="background:#90a4ae; padding: 10px 20px; font-size:14px;" onclick="showMenu()">🏠 Menu</button>
+        <button class="menu-btn" style="background:#90a4ae; padding: 10px 20px; font-size:28px;" onclick="showMenu()">🏠 Menu</button>
     </div>
 
     <script>
+        
+        // İsim Değişkeni
         let userName = "Nehir";
         let correctCounter = 0; // Doğru cevapları saymak için
 
         function saveName() {
             const input = document.getElementById('user-name-input');
             if(input.value.trim() !== "") { userName = input.value.trim(); }
+            // Başlıkları Güncelle
             document.getElementById('game-main-title').innerText = `🌟 English for ${userName} 🌟`;
             document.getElementById('page-title').innerText = `English for ${userName}`;
+            // Ekranları değiştir
             document.getElementById('name-screen').style.display = 'none';
             document.getElementById('main-menu').style.display = 'grid';
+            // İlk sesi tetikle (Safari/iOS için ses kilidini açar)
             speak(`Hello ${userName}, let's learn English!`);
         }
 
@@ -224,6 +229,8 @@
             const emojiEl = document.createElement('div');
             emojiEl.innerText = selected.emoji;
             emojiEl.style.fontSize = '100px';
+            // Alt orta noktadan sallanmasını sağlıyoruz (el sallama efekti için)
+            emojiEl.style.transformOrigin = 'bottom center';
             emojiEl.style.animation = 'waveHand 0.6s ease-in-out infinite'; // Sürekli el sallar
             
             // Konuşma Balonu
@@ -318,7 +325,9 @@
                     const card = createCard(item);
                     card.onclick = () => {
                         if(item.n === target.n) { 
-                            speak(`Great Job, ${userName}!`); 
+                            speak(`Great Job, ${userName}!`);
+                            card.style.borderColor = "#4caf50";
+                            setTimeout(() => { if(!card.classList.contains('matched')) card.style.borderColor = "#ddd"; }, 500);
                             title.innerText = "🌟 CORRECT! 🌟"; 
                             checkMilestone();
                             setTimeout(nextTurn, 2000); 
@@ -340,14 +349,20 @@
                 const btnGroup = document.createElement('div');
                 const btnY = document.createElement('button'); btnY.className = 'yes-no-btn'; btnY.style.background = '#4caf50'; btnY.innerText = '✓'; btnY.style.color = '#ffffff';
                 btnY.onclick = () => {
+                    // 1. Basılma efekti: Gölgeyi sil ve butonu biraz aşağı kaydır
                     btnY.style.boxShadow = 'none'; btnY.style.filter = 'brightness(1.6)'; btnY.style.transform = 'translateY(4px)';
+                    // 2. 250ms sonra eski haline döndür
                     setTimeout(() => { btnY.style.boxShadow = '0 6px rgba(0,0,0,0.2)'; btnY.style.filter = 'brightness(1)'; btnY.style.transform = 'translateY(0px)'; }, 250);
+                     // Oyun mantığı
                     if(isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; checkMilestone(); setTimeout(nextTurn, 2000); } else speak("Ooops!");
                 };
                 const btnN = document.createElement('button'); btnN.className = 'yes-no-btn'; btnN.style.background = '#f44336'; btnN.innerText = '✕'; btnN.style.color = '#ffffff';
                 btnN.onclick = () => {
+                    // 1. Basılma efekti: Gölgeyi sil ve butonu biraz aşağı kaydır
                     btnN.style.boxShadow = 'none'; btnN.style.filter = 'brightness(1.6)'; btnN.style.transform = 'translateY(4px)';
+                    // 2. 250ms sonra eski haline döndür
                     setTimeout(() => { btnN.style.boxShadow = '0 6px rgba(0,0,0,0.2)'; btnN.style.filter = 'brightness(1)'; btnN.style.transform = 'translateY(0px)'; }, 250);
+                    // Oyun mantığı
                     if(!isCorrect) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 YES! 🌟"; checkMilestone(); setTimeout(nextTurn, 2000); } else speak("Ooops!");
                 };
                 btnGroup.appendChild(btnY); btnGroup.appendChild(btnN);
@@ -377,7 +392,8 @@
                     iBtn.onclick = () => {
                         if(iBtn.classList.contains('matched') || !activeSoundObj) return;
                         if(activeSoundObj.n === item.n) {
-                            iBtn.classList.add('matched'); activeSoundElement.classList.add('matched');
+                            iBtn.classList.add('matched'); 
+                            activeSoundElement.classList.add('matched');
                             activeSoundElement.innerHTML = '✅'; 
                             matchWinCount++; activeSoundObj = null; activeSoundElement = null;
                             if(matchWinCount === 5) { speak(`Great Job, ${userName}!`); title.innerText = "🌟 AMAZING! 🌟"; checkMilestone(); setTimeout(nextTurn, 2500); }
