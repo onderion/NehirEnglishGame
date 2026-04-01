@@ -282,13 +282,44 @@
         let activeSoundElement = null;
         let matchWinCount = 0;
 
-        function speak(text) {
+        /*function speak(text) {
             window.speechSynthesis.cancel();
             const u = new SpeechSynthesisUtterance(text);
             u.lang = 'en-US'; u.rate = 0.7;
             window.speechSynthesis.speak(u);
         }
+        */
 
+        function speak(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+    
+        // Cihazdaki tüm sesleri al
+        const voices = window.speechSynthesis.getVoices();
+    
+        // İngilizce (US) ve daha doğal tınılı sesleri ara
+        // iOS'ta 'Samantha' genelde en yumuşak olanıdır.
+        const preferredVoice = voices.find(v => 
+        (v.lang === 'en-US' || v.lang === 'en_US') && 
+        (v.name.includes('Samantha') || v.name.includes('Nicky') || v.name.includes('Enhanced')) || v.name.includes('Premium'))
+        );
+
+        if (preferredVoice) {
+        u.voice = preferredVoice;
+        }
+
+        u.lang = 'en-US'; 
+        u.rate = 0.8; // Hızı biraz daha düşürerek daha anlaşılır ve yumuşak kıldık
+        u.pitch = 1.1; // Sesi çok hafif incelterek daha çocuksu/sempatik bir tona çektik
+    
+        window.speechSynthesis.speak(u);
+        }
+
+        // iOS Safari'de seslerin yüklenmesi zaman alabilir, bu yüzden listeyi hazır tutalım
+        window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+        };
+        
         function showMenu() {
             document.getElementById('main-menu').style.display = 'grid';
             document.getElementById('game-screen').style.display = 'none';
